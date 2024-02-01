@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOCAL STORAGE EXERCISE</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+        letter-spacing: 3px;
+      }
+      .section1 {
+        position: inherit;
+        height: 250px;
+        margin: 50px 0;
+      }
+      .form {
+        width: fit-content;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0%);
+      }
+      .tittle {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+        margin-top: 20px;
+      }
+      .tittle label {
+        width: 50px;
+        font-size: 25px;
+        font-weight: 600;
+      }
+      .tittle span {
+        font-size: 25px;
+        font-weight: 600;
+      }
+      .tittle input {
+        font-size: 22px;
+        padding: 5px 10px;
+      }
+      .btn_box {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .btn_box button {
+        width: 100%;
+        padding: 5px 0;
+        font-size: 22px;
+        font-weight: 600;
+        border: 2px solid black;
+        border-radius: 10px;
+        background-color: rgb(10, 125, 125);
+        color: white;
+      }
+      .section2{
+        position: relative;
+      }
+      .retiveData {
+        position: absolute;
+        margin-top: 30px;
+        left: 50%;
+        transform: translate(-50%,0%);
+      }
+      .data {
+        display: flex;
+        width: fit-content;
+        padding: 10px 0;
+      }
+      .userId {
+        width: 20px;
+        font-size: 30px;
+        font-weight: 600;
+        height: fit-content;
+        margin-right: 30px;
+      }
+      .name,
+      .age {
+        padding: 5px;
+        font-size: 20px;
+        height: fit-content;
+        font-weight: 600;
+      }
+      .name span,
+      .age span {
+        color: rgb(70, 68, 68);
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>LOCAL STORAGE EXERCISE</h1>
+    <div class="section1">
+      <div class="form">
+        <div class="tittle">
+          <label for="">Name</label>
+          <span>:</span>
+          <input id="name" type="text" placeholder="Enter Name" />
+        </div>
+        <div class="tittle">
+          <label for="">Age</label>
+          <span>:</span>
+          <input id="age" type="text" placeholder="Enter Name" />
+        </div>
+        <div class="btn_box">
+          <button onclick="submite()">Submit</button>
+        </div>
+      </div>
+    </div>
+    <div class="section2">
+      <h1>Display Storage Data</h1>
+      <div class="retiveData" id="retiveData"></div>
+    </div>
+  </body>
+  <script>
+    const Name = document.getElementById("name");
+    const Age = document.getElementById("age");
+    let UserId = 1;
+    function submite() {
+      if (Name.value.length > 0 && Age.value.length > 0) {
+        let User = {
+          Name: Name.value,
+          Age: Age.value,
+        };
+
+        localStorage.setItem(`User${UserId}`, JSON.stringify(User));
+        let data = JSON.parse(localStorage.getItem(`User${UserId}`));
+        let html = `<div class="data">
+                    <div class="userId">
+                    <p>#${UserId}</p>
+                    </div>
+                    <div class="name">
+                    <p>User-Name : <span>${data.Name}</span></p>
+                    </div>
+                    <div class="age">
+                    <p>User-Age : <span>${data.Age}</span></p>
+                    </div>
+                </div>`;
+        document.getElementById("retiveData").innerHTML += html;
+        ++UserId;
+
+        Name.value = "";
+        Age.value = "";
+      } else {
+        Name.style.border = "1px solid red";
+        Age.style.border = "1px solid red";
+      }
+    }
+
+    localStorage.clear();
+  </script>
+</html>
